@@ -1,0 +1,14 @@
+{
+  "title": "Log in to Hamse",
+  "subtitle": "Fast, secure authentication panel",
+  "api_url": "https://example.com/api/verify",
+  "get_key_url": "https://example.com",
+  "accent": "#00DDF8",
+  "notice": "",
+  "maintenance": false,
+  "maintenance_msg": "Under maintenance, try again later",
+  "latest_version": 1,
+  "force_update": false,
+  "update_url": "",
+  "update_msg": "A new version is available"
+}

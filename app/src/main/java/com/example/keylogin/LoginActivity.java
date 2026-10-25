@@ -4,6 +4,8 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -28,14 +30,16 @@ import java.nio.charset.StandardCharsets;
 
 public class LoginActivity extends AppCompatActivity {
 
-    // TODO: replace with your own license API and "get key" page
-    private static final String API_URL = "https://example.com/api/verify";
-    private static final String GET_KEY_URL = "https://example.com";
+    private static final String DEF_API = "https://example.com/api/verify";
+    private static final String DEF_GET = "https://example.com";
 
     private EditText keyInput;
-    private TextView status;
+    private TextView status, title, subtitle;
     private Button loginBtn;
     private boolean visible = false;
+    private boolean maintenance = false;
+    private boolean updateShown = false;
+    private JSONObject cfg = new JSONObject();
 
     @Override
     protected void onCreate(Bundle b) {
@@ -44,6 +48,8 @@ public class LoginActivity extends AppCompatActivity {
 
         keyInput = findViewById(R.id.keyInput);
         status = findViewById(R.id.status);
+        title = findViewById(R.id.title);
+        subtitle = findViewById(R.id.subtitle);
         loginBtn = findViewById(R.id.loginBtn);
 
         findViewById(R.id.pasteBtn).setOnClickListener(v -> {
@@ -65,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.langBtn).setOnClickListener(v -> {
-            String[] langs = {"English", "Soomaali", "العربية"};
+            String[] langs = {"English", "Soomaali", "Arabic"};
             new AlertDialog.Builder(this)
                     .setTitle("Select language")
                     .setItems(langs, (d, i) ->
@@ -74,14 +80,63 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.getKeyBtn).setOnClickListener(v ->
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GET_KEY_URL))));
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(cfg.optString("get_key_url", DEF_GET)))));
 
         loginBtn.setOnClickListener(v -> doLogin());
+
+        // 1) apply saved config instantly, 2) refresh from the internet
+        applyConfig(RemoteConfig.cached(this));
+        RemoteConfig.fetch(this, this::applyConfig);
+    }
+
+    private void applyConfig(JSONObject c) {
+        cfg = c;
+        title.setText(c.optString("title", "Log in"));
+        subtitle.setText(c.optString("subtitle", ""));
+        try {
+            loginBtn.setBackgroundTintList(ColorStateList.valueOf(
+                    Color.parseColor(c.optString("accent", "#00DDF8"))));
+        } catch (Exception ignored) { }
+
+        maintenance = c.optBoolean("maintenance", false);
+        if (maintenance) {
+            status.setTextColor(Color.parseColor("#FFB020"));
+            status.setText(c.optString("maintenance_msg", "Under maintenance"));
+        } else {
+            String n = c.optString("notice", "");
+            status.setTextColor(Color.parseColor("#9AA0AE"));
+            status.setText(n);
+        }
+        checkUpdate(c);
+    }
+
+    private void checkUpdate(JSONObject c) {
+        if (updateShown) return;
+        int latest = c.optInt("latest_version", 0);
+        int current = 0;
+        try {
+            current = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+        } catch (Exception ignored) { }
+        final String url = c.optString("update_url", "");
+        if (latest <= current || url.isEmpty()) return;
+        updateShown = true;
+        final boolean force = c.optBoolean("force_update", false);
+        AlertDialog.Builder d = new AlertDialog.Builder(this)
+                .setTitle("Update")
+                .setMessage(c.optString("update_msg", "A new version is available"))
+                .setCancelable(!force)
+                .setPositiveButton("UPDATE", (x, i) ->
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url))));
+        if (!force) d.setNegativeButton("LATER", null);
+        d.show();
     }
 
     private void doLogin() {
+        if (maintenance) return;
         final String key = keyInput.getText().toString().trim();
         if (key.isEmpty()) {
+            status.setTextColor(Color.parseColor("#FF6B6B"));
             status.setText("Please enter a key");
             return;
         }
@@ -106,6 +161,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(new Intent(this, MainActivity.class));
                     finish();
                 } else {
+                    status.setTextColor(Color.parseColor("#FF6B6B"));
                     status.setText(fErr);
                 }
             });
@@ -118,7 +174,8 @@ public class LoginActivity extends AppCompatActivity {
         body.put("key", key);
         body.put("device", device);
 
-        HttpURLConnection c = (HttpURLConnection) new URL(API_URL).openConnection();
+        HttpURLConnection c = (HttpURLConnection)
+                new URL(cfg.optString("api_url", DEF_API)).openConnection();
         c.setRequestMethod("POST");
         c.setConnectTimeout(10000);
         c.setReadTimeout(10000);
@@ -133,7 +190,6 @@ public class LoginActivity extends AppCompatActivity {
             String line;
             while ((line = r.readLine()) != null) sb.append(line);
         }
-        // Expected server reply: {"valid": true}
         return new JSONObject(sb.toString()).optBoolean("valid", false);
     }
 }
