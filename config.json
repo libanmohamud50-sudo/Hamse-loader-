@@ -13,12 +13,5 @@
   "update_msg": "A new version is available",
   "dashboard_title": "Dashboard",
   "dashboard_url": "",
-  "cards": [
-    {
-      "title": "WELCOME",
-      "text": "Welcome! You can edit these cards online at any time.",
-      "button": "",
-      "url": ""
-    }
-  ]
+  "cards": []
 }
