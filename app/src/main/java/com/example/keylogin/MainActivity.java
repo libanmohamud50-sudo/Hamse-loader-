@@ -111,30 +111,103 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        // Shizuku Setup
-        try {
-            android.widget.Button btnConnect = findViewById(R.id.btn_connect_shizuku);
-            if (btnConnect != null) {
-                btnConnect.setOnClickListener(v -> {
-                    try {
-                        // Marka la riixo, fur app-ka Shizuku (haddii uu ku rakiban yahay)
-                        android.content.Intent intent = getPackageManager().getLaunchIntentForPackage("moe.shizuku.privileged.api");
-                        if (intent != null) {
-                            startActivity(intent);
-                            android.widget.Toast.makeText(this, "Please open Shizuku and grant permission.", android.widget.Toast.LENGTH_LONG).show();
-                        } else {
-                            android.widget.Toast.makeText(this, "Shizuku is not installed on your device.", android.widget.Toast.LENGTH_LONG).show();
-                        }
-                    } catch (Exception e) {
-                        android.widget.Toast.makeText(this, "Error: " + e.getMessage(), android.widget.Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        } catch (Exception e) {
-            // Haddii btn_connect_shizuku uusan jirin, iska dhaaf
+
+// Shizuku integration: official Binder and permission API.
+final int shizukuRequestCode = 4201;
+final android.widget.Button shizukuButton =
+        findViewById(R.id.btn_connect_shizuku);
+final android.widget.TextView shizukuStatus =
+        findViewById(R.id.txt_shizuku_detail);
+
+final Runnable refreshShizuku = () -> {
+    try {
+        if (!rikka.shizuku.Shizuku.pingBinder()) {
+            shizukuButton.setText("CONNECT");
+            shizukuButton.setTextColor(0xFF000000);
+            shizukuStatus.setText("Shizuku is not running. Start it first.");
+            shizukuStatus.setTextColor(0xFFFFA500);
+            return;
         }
 
-        render(RemoteConfig.cached(this));
+        if (rikka.shizuku.Shizuku.checkSelfPermission()
+                == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            shizukuButton.setText("CONNECTED");
+            shizukuButton.setTextColor(0xFF00C853);
+            shizukuStatus.setText("Permission granted");
+            shizukuStatus.setTextColor(0xFF00C853);
+        } else {
+            shizukuButton.setText("GRANT PERMISSION");
+            shizukuButton.setTextColor(0xFF000000);
+            shizukuStatus.setText("Shizuku is running. Permission required.");
+            shizukuStatus.setTextColor(0xFFFFA500);
+        }
+    } catch (Throwable error) {
+        shizukuButton.setText("CONNECT");
+        shizukuStatus.setText("Shizuku unavailable. Open Shizuku and retry.");
+        shizukuStatus.setTextColor(0xFFFF5252);
+        android.util.Log.e("ShizukuIntegration", "Status check failed", error);
+    }
+};
+
+try {
+    rikka.shizuku.Shizuku.addBinderReceivedListenerSticky(
+            () -> runOnUiThread(refreshShizuku));
+    rikka.shizuku.Shizuku.addBinderDeadListener(() -> runOnUiThread(() -> {
+        shizukuButton.setText("CONNECT");
+        shizukuButton.setTextColor(0xFF000000);
+        shizukuStatus.setText("Shizuku connection lost. Restart Shizuku.");
+        shizukuStatus.setTextColor(0xFFFF5252);
+    }));
+
+    rikka.shizuku.Shizuku.addRequestPermissionResultListener(
+            (requestCode, grantResult) -> {
+                if (requestCode == shizukuRequestCode) {
+                    runOnUiThread(() -> {
+                        if (grantResult ==
+                                android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                            refreshShizuku.run();
+                        } else {
+                            shizukuButton.setText("CONNECT");
+                            shizukuStatus.setText("Shizuku permission denied.");
+                            shizukuStatus.setTextColor(0xFFFF5252);
+                        }
+                    });
+                }
+            });
+
+    shizukuButton.setOnClickListener(view -> {
+        try {
+            if (!rikka.shizuku.Shizuku.pingBinder()) {
+                shizukuStatus.setText(
+                        "Start Shizuku using wireless debugging or ADB first.");
+                shizukuStatus.setTextColor(0xFFFFA500);
+                return;
+            }
+
+            if (rikka.shizuku.Shizuku.checkSelfPermission()
+                    == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                refreshShizuku.run();
+            } else {
+                rikka.shizuku.Shizuku.requestPermission(shizukuRequestCode);
+                shizukuStatus.setText("Waiting for Shizuku permission...");
+                shizukuStatus.setTextColor(0xFFFFA500);
+            }
+        } catch (Throwable error) {
+            android.util.Log.e("ShizukuIntegration", "Connect failed", error);
+            shizukuStatus.setText("Unable to connect. Check Shizuku status.");
+            shizukuStatus.setTextColor(0xFFFF5252);
+        }
+    });
+
+    refreshShizuku.run();
+} catch (Throwable error) {
+    android.util.Log.e("ShizukuIntegration", "Initialization failed", error);
+    shizukuStatus.setText("Shizuku initialization failed. Check logcat.");
+    shizukuStatus.setTextColor(0xFFFF5252);
+}
+
+render(RemoteConfig.cached(this));
+
         RemoteConfig.fetch(this, this::render);
     }
 
