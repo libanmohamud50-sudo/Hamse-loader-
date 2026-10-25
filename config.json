@@ -4,7 +4,7 @@
   "api_url": "https://example.com/api/verify",
   "get_key_url": "https://example.com",
   "accent": "#00DDF8",
-  "notice": "Tijaabo",
+  "notice": "",
   "maintenance": false,
   "maintenance_msg": "Under maintenance, try again later",
   "latest_version": 4,
