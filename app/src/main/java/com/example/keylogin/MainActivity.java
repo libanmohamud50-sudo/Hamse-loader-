@@ -121,12 +121,12 @@ public class MainActivity extends AppCompatActivity {
                         android.content.Intent intent = getPackageManager().getLaunchIntentForPackage("moe.shizuku.privileged.api");
                         if (intent != null) {
                             startActivity(intent);
-                            android.widget.Toast.makeText(this, "Fur Shizuku oo oggolaanshaha bixi, kadibna ku noqo app-ka.", android.widget.Toast.LENGTH_LONG).show();
+                            android.widget.Toast.makeText(this, "Please open Shizuku and grant permission.", android.widget.Toast.LENGTH_LONG).show();
                         } else {
-                            android.widget.Toast.makeText(this, "Shizuku ma ku rakibna telefoonkaaga.", android.widget.Toast.LENGTH_LONG).show();
+                            android.widget.Toast.makeText(this, "Shizuku is not installed on your device.", android.widget.Toast.LENGTH_LONG).show();
                         }
                     } catch (Exception e) {
-                        android.widget.Toast.makeText(this, "Khalad: " + e.getMessage(), android.widget.Toast.LENGTH_SHORT).show();
+                        android.widget.Toast.makeText(this, "Error: " + e.getMessage(), android.widget.Toast.LENGTH_SHORT).show();
                     }
                 });
             }
