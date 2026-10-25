@@ -97,10 +97,17 @@ public class MainActivity extends AppCompatActivity {
             android.widget.Button btnConnect = findViewById(R.id.btn_connect_shizuku);
             if (btnConnect != null) {
                 btnConnect.setOnClickListener(v -> {
-                    if (Shizuku.isPreV11() || Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
-                        android.widget.Toast.makeText(this, "Shizuku already connected", android.widget.Toast.LENGTH_SHORT).show();
-                    } else if (Shizuku.isPreV11() || Shizuku.checkSelfPermission() == PackageManager.PERMISSION_DENIED) {
-                        Shizuku.requestPermission(0);
+                    try {
+                        // Marka la riixo, fur app-ka Shizuku (haddii uu ku rakiban yahay)
+                        android.content.Intent intent = getPackageManager().getLaunchIntentForPackage("moe.shizuku.privileged.api");
+                        if (intent != null) {
+                            startActivity(intent);
+                            android.widget.Toast.makeText(this, "Fur Shizuku oo oggolaanshaha bixi, kadibna ku noqo app-ka.", android.widget.Toast.LENGTH_LONG).show();
+                        } else {
+                            android.widget.Toast.makeText(this, "Shizuku ma ku rakibna telefoonkaaga.", android.widget.Toast.LENGTH_LONG).show();
+                        }
+                    } catch (Exception e) {
+                        android.widget.Toast.makeText(this, "Khalad: " + e.getMessage(), android.widget.Toast.LENGTH_SHORT).show();
                     }
                 });
             }
