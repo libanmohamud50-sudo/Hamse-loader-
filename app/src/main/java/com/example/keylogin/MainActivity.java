@@ -1,4 +1,5 @@
 package com.example.keylogin;
+import com.example.keylogin.R;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         content.setOrientation(LinearLayout.VERTICAL);
         root.addView(content, new LinearLayout.LayoutParams(MATCH, 0, 1f));
 
-        setContentView(root);
+        setContentView(R.layout.activity_main);
 
         render(RemoteConfig.cached(this));
         RemoteConfig.fetch(this, this::render);
