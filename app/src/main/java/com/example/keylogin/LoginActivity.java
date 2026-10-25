@@ -178,6 +178,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(this, MainActivity.class);
                     i.putExtra("expire", fr.expire);
+                    i.putExtra("key", key);
                     startActivity(i);
                     finish();
                 } else {
