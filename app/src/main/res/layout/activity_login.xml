@@ -12,9 +12,6 @@
         android:paddingHorizontal="28dp"
         android:paddingVertical="48dp">
 
-        <ImageView
-            android:layout_width="72dp"
-            android:layout_height="72dp"
             android:padding="16dp"
             android:background="@drawable/bg_input"
             android:src="@drawable/ic_launcher" />
