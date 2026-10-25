@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import rikka.shizuku.Shizuku;
+import android.content.pm.PackageManager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,6 +91,22 @@ public class MainActivity extends AppCompatActivity {
         root.addView(content, new LinearLayout.LayoutParams(MATCH, 0, 1f));
 
         setContentView(R.layout.activity_main);
+
+        // Shizuku Setup
+        try {
+            android.widget.Button btnConnect = findViewById(R.id.btn_connect_shizuku);
+            if (btnConnect != null) {
+                btnConnect.setOnClickListener(v -> {
+                    if (Shizuku.isPreV11() || Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
+                        android.widget.Toast.makeText(this, "Shizuku already connected", android.widget.Toast.LENGTH_SHORT).show();
+                    } else if (Shizuku.isPreV11() || Shizuku.checkSelfPermission() == PackageManager.PERMISSION_DENIED) {
+                        Shizuku.requestPermission(0);
+                    }
+                });
+            }
+        } catch (Exception e) {
+            // Haddii btn_connect_shizuku uusan jirin, iska dhaaf
+        }
 
         render(RemoteConfig.cached(this));
         RemoteConfig.fetch(this, this::render);
