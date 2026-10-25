@@ -90,6 +90,12 @@ public class LoginActivity extends AppCompatActivity {
         RemoteConfig.fetch(this, this::applyConfig);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        RemoteConfig.fetch(this, this::applyConfig);
+    }
+
     private void applyConfig(JSONObject c) {
         cfg = c;
         title.setText(c.optString("title", "Log in"));

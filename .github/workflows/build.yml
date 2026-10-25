@@ -1,7 +1,12 @@
 name: Build APK
 on:
   push:
+    paths-ignore:
+      - 'config.json'
+      - '**.md'
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -11,12 +16,36 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
+      - name: Ensure keystore
+        run: |
+          if [ ! -f app/debug.keystore ]; then
+            keytool -genkeypair -keystore app/debug.keystore -storepass android -keypass android -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+          fi
       - uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: 8.2.1
       - name: Build with Gradle
         run: gradle assembleDebug --no-daemon
-      - uses: actions/upload-artifact@v4
-        with:
-          name: app-debug
-          path: app/build/outputs/apk/debug/*.apk
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest --cleanup-tag -y || true
+          gh release create latest app/build/outputs/apk/debug/app-debug.apk --title "latest" --notes "build ${{ github.run_number }}"
+      - name: Bump config
+        env:
+          N: ${{ github.run_number }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          d = json.load(open("config.json"))
+          d["latest_version"] = int(os.environ["N"])
+          d["update_url"] = "https://github.com/libanmohamud50-sudo/Hamse-loader-/releases/latest/download/app-debug.apk"
+          json.dump(d, open("config.json", "w"), indent=2, ensure_ascii=False)
+          PY
+          git config user.name github-actions
+          git config user.email actions@github.com
+          git add config.json app/debug.keystore
+          git commit -m "bump version" -q || exit 0
+          git pull --rebase -q
+          git push -q

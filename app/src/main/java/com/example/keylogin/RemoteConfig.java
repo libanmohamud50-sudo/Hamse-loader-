@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 
 public class RemoteConfig {
     public static final String URL =
-            "https://raw.githubusercontent.com/libanmohamud50-sudo/Hamse-loader-/main/config.json";
+            "https://api.github.com/repos/libanmohamud50-sudo/Hamse-loader-/contents/config.json?ref=main";
 
     public interface Callback { void onConfig(JSONObject cfg); }
 
@@ -30,10 +30,11 @@ public class RemoteConfig {
         new Thread(() -> {
             try {
                 HttpURLConnection c = (HttpURLConnection)
-                        new URL(URL + "?t=" + System.currentTimeMillis()).openConnection();
+                        new URL(URL + "&t=" + System.currentTimeMillis()).openConnection();
                 c.setConnectTimeout(8000);
                 c.setReadTimeout(8000);
                 c.setUseCaches(false);
+                c.setRequestProperty("Accept", "application/vnd.github.raw");
                 StringBuilder sb = new StringBuilder();
                 try (BufferedReader r = new BufferedReader(
                         new InputStreamReader(c.getInputStream(), StandardCharsets.UTF_8))) {
