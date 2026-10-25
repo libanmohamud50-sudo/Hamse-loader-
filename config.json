@@ -13,12 +13,5 @@
   "update_msg": "A new version is available",
   "dashboard_title": "Dashboard",
   "dashboard_url": "",
-  "cards": [
-    {
-      "title": "JOIN TELEGRAM CHANNEL",
-      "text": "Click to join our official channel",
-      "button": "Join Now",
-      "url": "https://t.me/HAMSECHEATS"
-    }
-  ]
+  "cards": []
 }
