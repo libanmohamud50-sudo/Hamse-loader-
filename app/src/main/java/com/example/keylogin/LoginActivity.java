@@ -97,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Updater.resumePending(this);
         RemoteConfig.fetch(this, this::applyConfig);
     }
 
@@ -136,8 +137,7 @@ public class LoginActivity extends AppCompatActivity {
                 .setTitle("Update")
                 .setMessage(c.optString("update_msg", "A new version is available"))
                 .setCancelable(!force)
-                .setPositiveButton("UPDATE", (x, i) ->
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url))));
+                .setPositiveButton("UPDATE", (x, i) -> Updater.start(this, url));
         if (!force) d.setNegativeButton("LATER", null);
         d.show();
     }
