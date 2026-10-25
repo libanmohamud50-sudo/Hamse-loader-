@@ -31,6 +31,25 @@ import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            if (rikka.shizuku.Shizuku.checkSelfPermission() == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                android.widget.TextView txt = findViewById(R.id.txt_shizuku_detail);
+                if (txt != null) {
+                    txt.setText("Shizuku Connected");
+                    txt.setTextColor(android.graphics.Color.GREEN);
+                }
+                android.widget.Button btn = findViewById(R.id.btn_connect_shizuku);
+                if (btn != null) {
+                    btn.setText("CONNECTED");
+                    btn.setBackgroundTintList(android.content.res.ColorStateList.valueOf(android.graphics.Color.GREEN));
+                }
+            }
+        } catch (Exception e) {}
+    }
+
 
     private static final int MATCH = ViewGroup.LayoutParams.MATCH_PARENT;
     private static final int WRAP = ViewGroup.LayoutParams.WRAP_CONTENT;
