@@ -5,7 +5,7 @@
     <application
         android:allowBackup="false"
         android:icon="@drawable/ic_lock"
-        android:label="Key Login"
+        android:label="Hamse Cheats Loader"
         android:theme="@style/AppTheme">
         <provider
             android:name="androidx.core.content.FileProvider"
