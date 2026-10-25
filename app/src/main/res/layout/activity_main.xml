@@ -1,349 +1,551 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0A0A0F"
-    android:fillViewport="true">
+    android:background="#0A0A0F">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <!-- Header -->
+        <!-- Header / Top Bar -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
-            
+            android:gravity="center_vertical"
+            android:padding="16dp">
+
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/ic_launcher" />
-                
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/ic_launcher"
+                android:background="@drawable/circle_background" />
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:layout_marginStart="12dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="HAMSE VIP"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="VIP Controls &amp; Shizuku Manager"
-                    android:textColor="#9AA0AE"
+                    android:textColor="#8A92A6"
                     android:textSize="12sp" />
             </LinearLayout>
-            
+
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@android:drawable/ic_lock_idle_lock"
-                app:tint="#00DDF8" />
+                android:src="@drawable/ic_lock"
+                android:tint="#00DDF8" />
         </LinearLayout>
 
-        <!-- Subscription Countdown -->
-        <androidx.cardview.widget.CardView
+        <!-- Scrollable Content -->
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardBackgroundColor="#14141C"
-            app:cardCornerRadius="16dp">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:padding="16dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-                
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@android:drawable/ic_menu_recent_history"
-                        app:tint="#00DDF8" />
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="8dp"
-                        android:text="Subscription countdown"
-                        android:textColor="#FFFFFF"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="● LIVE"
-                        android:textColor="#00DDF8"
-                        android:textSize="12sp" />
-                </LinearLayout>
-                
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Synced to system clock"
-                    android:textColor="#555555"
-                    android:textSize="12sp" />
+                android:orientation="vertical">
 
-                <!-- Time Boxes -->
+                <!-- Subscription Countdown Card -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:orientation="horizontal"
-                    android:weightSum="4">
-                    <!-- Days -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="#1C1C22"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="8dp"
-                        android:layout_marginEnd="4dp">
-                        <TextView android:id="@+id/tv_days" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="29" android:textColor="#FFFFFF" android:textSize="20sp" android:textStyle="bold"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Days" android:textColor="#00DDF8" android:textSize="10sp"/>
-                    </LinearLayout>
-                    <!-- Hours -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="#1C1C22"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="8dp"
-                        android:layout_marginEnd="4dp">
-                        <TextView android:id="@+id/tv_hours" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="17" android:textColor="#FFFFFF" android:textSize="20sp" android:textStyle="bold"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hours" android:textColor="#00DDF8" android:textSize="10sp"/>
-                    </LinearLayout>
-                    <!-- Minutes -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="#1C1C22"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="8dp"
-                        android:layout_marginEnd="4dp">
-                        <TextView android:id="@+id/tv_minutes" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="57" android:textColor="#FFFFFF" android:textSize="20sp" android:textStyle="bold"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Minutes" android:textColor="#00DDF8" android:textSize="10sp"/>
-                    </LinearLayout>
-                    <!-- Seconds -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="#1C1C22"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="8dp">
-                        <TextView android:id="@+id/tv_seconds" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="20" android:textColor="#00DDF8" android:textSize="20sp" android:textStyle="bold"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Seconds" android:textColor="#00DDF8" android:textSize="10sp"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    android:orientation="vertical"
+                    android:background="@drawable/card_background"
+                    android:padding="16dp"
+                    android:layout_marginBottom="16dp">
 
-        <!-- Shizuku ADB -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardBackgroundColor="#14141C"
-            app:cardCornerRadius="16dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-                
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@android:drawable/ic_menu_manage"
-                        app:tint="#00DDF8" />
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_marginStart="12dp">
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Shizuku ADB Engine"
+                            android:layout_weight="1"
+                            android:text="⏱  Subscription countdown"
                             android:textColor="#FFFFFF"
                             android:textSize="16sp"
                             android:textStyle="bold" />
+
                         <TextView
-                            android:id="@+id/txt_shizuku_detail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Permission required"
-                            android:textColor="#FFA500"
-                            android:textSize="12sp" />
+                            android:text="● LIVE"
+                            android:textColor="#00DDF8"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
-                    <Button
-                        android:id="@+id/btn_connect_shizuku"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:text="CONNECT"
-                        android:backgroundTint="#1C1C22"
-                        android:textColor="#FFFFFF" />
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
 
-        <!-- Select Game Version -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardBackgroundColor="#14141C"
-            app:cardCornerRadius="16dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-                
-                <TextView
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Synced to system clock"
+                        android:textColor="#8A92A6"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="12dp" />
+
+                    <!-- Countdown Boxes -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+
+                        <!-- Days -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="@drawable/time_box_bg"
+                            android:layout_marginEnd="4dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="29"
+                                android:textColor="#FFFFFF"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Days"
+                                android:textColor="#00DDF8"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Hours -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="@drawable/time_box_bg"
+                            android:layout_marginHorizontal="2dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="13"
+                                android:textColor="#FFFFFF"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Hours"
+                                android:textColor="#00DDF8"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Minutes -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="@drawable/time_box_bg"
+                            android:layout_marginHorizontal="2dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="57"
+                                android:textColor="#FFFFFF"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Minutes"
+                                android:textColor="#00DDF8"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- Seconds -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="@drawable/time_box_active_bg"
+                            android:layout_marginStart="4dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="58"
+                                android:textColor="#00DDF8"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Seconds"
+                                android:textColor="#00DDF8"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Shizuku ADB Engine Card -->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="SELECT GAME VERSION"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp"
+                    android:orientation="vertical"
+                    android:background="@drawable/card_background"
+                    android:padding="16dp"
+                    android:layout_marginBottom="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="🔧  Shizuku ADB Engine\n● Connected (ADB Active)"
+                            android:textColor="#FFFFFF"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/btn_connect_shizuku"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:text="CONNECTED"
+                            android:textSize="12sp"
+                            android:backgroundTint="#1A3A32"
+                            android:textColor="#00FF66" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Shizuku ADB permission is active."
+                        android:textColor="#8A92A6"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:background="@drawable/sub_card_bg"
+                            android:padding="8dp"
+                            android:layout_marginEnd="4dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="EXECUTION MODE"
+                                android:textSize="9sp"
+                                android:textColor="#8A92A6" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ADB Process / Rootless"
+                                android:textSize="11sp"
+                                android:textColor="#00DDF8"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:background="@drawable/sub_card_bg"
+                            android:padding="8dp"
+                            android:layout_marginStart="4dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="API PERMISSION"
+                                android:textSize="9sp"
+                                android:textColor="#8A92A6" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Granted &amp; Active"
+                                android:textSize="11sp"
+                                android:textColor="#00DDF8"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Select Game Version -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/card_background"
+                    android:padding="16dp"
+                    android:layout_marginBottom="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="SELECT GAME VERSION"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="GL"
+                            android:background="@drawable/badge_bg"
+                            android:textColor="#00DDF8"
+                            android:textSize="11sp"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="2dp" />
+                    </LinearLayout>
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <!-- GL -->
+                            <LinearLayout
+                                android:layout_width="70dp"
+                                android:layout_height="80dp"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:background="@drawable/game_selected_bg"
+                                android:layout_marginEnd="8dp"
+                                android:padding="4dp">
+                                <TextView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/ic_pubg" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="GL"
+                                    android:textColor="#00DDF8"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold"
+                                    android:layout_marginTop="4dp" />
+                            </LinearLayout>
+
+                            <!-- KR -->
+                            <LinearLayout
+                                android:layout_width="70dp"
+                                android:layout_height="80dp"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:background="@drawable/game_unselected_bg"
+                                android:layout_marginEnd="8dp"
+                                android:padding="4dp">
+                                <TextView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/ic_pubg" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="KR"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="11sp"
+                                    android:layout_marginTop="4dp" />
+                            </LinearLayout>
+
+                            <!-- TW -->
+                            <LinearLayout
+                                android:layout_width="70dp"
+                                android:layout_height="80dp"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:background="@drawable/game_unselected_bg"
+                                android:layout_marginEnd="8dp"
+                                android:padding="4dp">
+                                <TextView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/ic_pubg" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="TW"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="11sp"
+                                    android:layout_marginTop="4dp" />
+                            </LinearLayout>
+
+                            <!-- VN -->
+                            <LinearLayout
+                                android:layout_width="70dp"
+                                android:layout_height="80dp"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:background="@drawable/game_unselected_bg"
+                                android:layout_marginEnd="8dp"
+                                android:padding="4dp">
+                                <TextView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/ic_pubg" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="VN"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="11sp"
+                                    android:layout_marginTop="4dp" />
+                            </LinearLayout>
+
+                            <!-- BGMI -->
+                            <LinearLayout
+                                android:layout_width="70dp"
+                                android:layout_height="80dp"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:background="@drawable/game_unselected_bg"
+                                android:padding="4dp">
+                                <TextView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/ic_pubg" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="BGMI"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="11sp"
+                                    android:layout_marginTop="4dp" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </HorizontalScrollView>
+                </LinearLayout>
+
+                <!-- Action Buttons -->
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="COPY FIST"
+                    android:backgroundTint="#00DDF8"
+                    android:textColor="#000000"
                     android:textStyle="bold"
                     android:layout_marginBottom="12dp" />
 
-                <HorizontalScrollView
+                <Button
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scrollbars="none">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        
-                        <!-- GL -->
-                        <LinearLayout
-                            android:layout_width="72dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:layout_marginEnd="8dp"
-                            android:background="#1C1C22"
-                            android:padding="4dp">
-                            <ImageView android:layout_width="64dp" android:layout_height="64dp" android:src="@drawable/pubg_gl" android:scaleType="centerCrop"/>
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GL" android:textColor="#FFFFFF" android:textSize="12sp" android:layout_marginTop="4dp"/>
-                        </LinearLayout>
+                    android:layout_height="48dp"
+                    android:text="START CHEAT ENGINE"
+                    android:backgroundTint="#00DDF8"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp" />
 
-                        <!-- KR -->
-                        <LinearLayout
-                            android:layout_width="72dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:layout_marginEnd="8dp"
-                            android:background="#1C1C22"
-                            android:padding="4dp">
-                            <ImageView android:layout_width="64dp" android:layout_height="64dp" android:src="@drawable/pubg_kr" android:scaleType="centerCrop"/>
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="KR" android:textColor="#FFFFFF" android:textSize="12sp" android:layout_marginTop="4dp"/>
-                        </LinearLayout>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="FLOATING MENU"
+                    android:backgroundTint="#1A1A24"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp" />
 
-                        <!-- TW -->
-                        <LinearLayout
-                            android:layout_width="72dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:layout_marginEnd="8dp"
-                            android:background="#1C1C22"
-                            android:padding="4dp">
-                            <ImageView android:layout_width="64dp" android:layout_height="64dp" android:src="@drawable/pubg_gl" android:scaleType="centerCrop"/>
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="TW" android:textColor="#FFFFFF" android:textSize="12sp" android:layout_marginTop="4dp"/>
-                        </LinearLayout>
-
-                        <!-- VN -->
-                        <LinearLayout
-                            android:layout_width="72dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:layout_marginEnd="8dp"
-                            android:background="#1C1C22"
-                            android:padding="4dp">
-                            <ImageView android:layout_width="64dp" android:layout_height="64dp" android:src="@drawable/pubg_kr" android:scaleType="centerCrop"/>
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="VN" android:textColor="#FFFFFF" android:textSize="12sp" android:layout_marginTop="4dp"/>
-                        </LinearLayout>
-
-                        <!-- BGMI -->
-                        <LinearLayout
-                            android:layout_width="72dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:background="#1C1C22"
-                            android:padding="4dp">
-                            <ImageView android:layout_width="64dp" android:layout_height="64dp" android:src="@drawable/pubg_gl" android:scaleType="centerCrop"/>
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="BGMI" android:textColor="#FFFFFF" android:textSize="12sp" android:layout_marginTop="4dp"/>
-                        </LinearLayout>
-                    </LinearLayout>
-                </HorizontalScrollView>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </ScrollView>
 
-        <!-- Buttons -->
-        <Button
-            android:id="@+id/btn_copy_fist"
+        <!-- Bottom Navigation Bar -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="COPY FIST"
-            android:backgroundTint="#00DDF8"
-            android:textColor="#000000"
-            android:layout_marginBottom="8dp" />
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:background="#12121C"
+            android:weightSum="2">
 
-        <Button
-            android:id="@+id/btn_start_engine"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="START CHEAT ENGINE"
-            android:backgroundTint="#00DDF8"
-            android:textColor="#000000"
-            android:layout_marginBottom="8dp" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="#1A3A4A">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_home"
+                    android:tint="#00DDF8" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Home"
+                    android:textColor="#00DDF8"
+                    android:textSize="10sp" />
+            </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_floating_menu"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="FLOATING MENU"
-            android:backgroundTint="#14141C"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="16dp" />
-
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_settings"
+                    android:tint="#8A92A6" />
+                    <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Settings"
+                    android:textColor="#8A92A6"
+                    android:textSize="10sp" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+</androidx.drawerlayout.widget.DrawerLayout>
