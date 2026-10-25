@@ -25,12 +25,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String DEF_API = "https://example.com/api/verify";
+    private static final String DEF_API = "https://a.hamse.workers.dev/verify";
     private static final String DEF_GET = "https://example.com";
 
     private EditText keyInput;
@@ -138,6 +142,12 @@ public class LoginActivity extends AppCompatActivity {
         d.show();
     }
 
+    private static class Result {
+        boolean ok;
+        String msg = "Invalid Key";
+        String expire = "";
+    }
+
     private void doLogin() {
         if (maintenance) return;
         final String key = keyInput.getText().toString().trim();
@@ -150,52 +160,69 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setEnabled(false);
         loginBtn.setText("CHECKING...");
         new Thread(() -> {
-            String err = null;
-            boolean ok = false;
+            Result r = new Result();
             try {
-                ok = verify(key);
-                if (!ok) err = "Invalid or expired key";
+                r = verify(key);
+            } catch (UnknownHostException | ConnectException e) {
+                r.msg = "No internet connection";
+            } catch (SocketTimeoutException e) {
+                r.msg = "Connection timed out";
             } catch (Exception e) {
-                err = "Network or server error";
+                r.msg = "Server error, try again";
             }
-            final boolean fOk = ok;
-            final String fErr = err;
+            final Result fr = r;
             runOnUiThread(() -> {
                 loginBtn.setEnabled(true);
                 loginBtn.setText("LOG IN");
-                if (fOk) {
-                    startActivity(new Intent(this, MainActivity.class));
+                if (fr.ok) {
+                    Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(this, MainActivity.class);
+                    i.putExtra("expire", fr.expire);
+                    startActivity(i);
                     finish();
                 } else {
                     status.setTextColor(Color.parseColor("#FF6B6B"));
-                    status.setText(fErr);
+                    status.setText(fr.msg);
                 }
             });
         }).start();
     }
 
-    private boolean verify(String key) throws Exception {
-        String device = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-        JSONObject body = new JSONObject();
-        body.put("key", key);
-        body.put("device", device);
+    private Result verify(String key) throws Exception {
+        String base = cfg.optString("api_url", DEF_API);
+        String url = base + (base.contains("?") ? "&" : "?")
+                + "key=" + URLEncoder.encode(key, "UTF-8");
 
-        HttpURLConnection c = (HttpURLConnection)
-                new URL(cfg.optString("api_url", DEF_API)).openConnection();
-        c.setRequestMethod("POST");
+        HttpURLConnection c = (HttpURLConnection) new URL(url).openConnection();
+        c.setRequestMethod("GET");
         c.setConnectTimeout(10000);
         c.setReadTimeout(10000);
-        c.setDoOutput(true);
-        c.setRequestProperty("Content-Type", "application/json");
-        try (OutputStream os = c.getOutputStream()) {
-            os.write(body.toString().getBytes(StandardCharsets.UTF_8));
-        }
-        InputStream is = c.getResponseCode() < 400 ? c.getInputStream() : c.getErrorStream();
+        c.setRequestProperty("Accept", "application/json");
+
+        int code = c.getResponseCode();
+        InputStream is = code < 400 ? c.getInputStream() : c.getErrorStream();
         StringBuilder sb = new StringBuilder();
-        try (BufferedReader r = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
-            String line;
-            while ((line = r.readLine()) != null) sb.append(line);
+        if (is != null) {
+            try (BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+                String line;
+                while ((line = rd.readLine()) != null) sb.append(line);
+            }
         }
-        return new JSONObject(sb.toString()).optBoolean("valid", false);
+
+        Result res = new Result();
+        JSONObject j;
+        try {
+            j = new JSONObject(sb.toString());
+        } catch (Exception e) {
+            res.msg = "Server error, try again";
+            return res;
+        }
+        res.ok = j.optBoolean("valid", false);
+        res.expire = j.optString("expire", "");
+        if (!res.ok) {
+            String reason = j.optString("reason", "");
+            res.msg = reason.isEmpty() ? "Invalid Key" : reason;
+        }
+        return res;
     }
 }
