@@ -17,7 +17,7 @@
             android:layout_height="72dp"
             android:padding="16dp"
             android:background="@drawable/bg_input"
-            android:src="@drawable/ic_lock" />
+            android:src="@drawable/ic_launcher" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
             <ImageView
                 android:layout_width="22dp"
                 android:layout_height="22dp"
-                android:src="@drawable/ic_lock" />
+                android:src="@drawable/ic_launcher" />
             <EditText
                 android:id="@+id/keyInput"
                 android:layout_width="0dp"
