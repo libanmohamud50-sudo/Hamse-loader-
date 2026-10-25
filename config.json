@@ -1,7 +1,7 @@
 {
   "title": "Log in to Hamse",
   "subtitle": "Fast, secure authentication panel",
-  "api_url": "https://example.com/api/verify",
+  "api_url": "https://a.hamse.workers.dev/verify",
   "get_key_url": "https://example.com",
   "accent": "#00DDF8",
   "notice": "",
