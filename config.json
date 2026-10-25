@@ -4,7 +4,7 @@
   "api_url": "https://a.hamse.workers.dev/verify",
   "get_key_url": "https://example.com",
   "accent": "#00DDF8",
-  "notice": "",
+  "notice": "SAFE LOADER 100%",
   "maintenance": false,
   "maintenance_msg": "Under maintenance, try again later",
   "latest_version": 7,
