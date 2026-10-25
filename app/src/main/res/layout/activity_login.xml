@@ -23,7 +23,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
-            android:id="@+id/title"\n            android:text="Log in to Key Login"
+            android:id="@+id/title"
+            android:text="Log in to Key Login"
             android:textColor="#FFFFFF"
             android:textSize="26sp"
             android:textStyle="bold" />
@@ -32,7 +33,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:id="@+id/subtitle"\n            android:text="Fast, secure authentication panel"
+            android:id="@+id/subtitle"
+            android:text="Fast, secure authentication panel"
             android:textColor="#9AA0AE"
             android:textSize="15sp" />
 
