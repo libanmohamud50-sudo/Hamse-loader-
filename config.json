@@ -1,5 +1,5 @@
 {
-  "title": "Log in to Hamse",
+  "title": "Log in to TRON-X",
   "subtitle": "Fast, secure authentication panel",
   "api_url": "https://a.hamse.workers.dev/verify",
   "get_key_url": "https://example.com",
