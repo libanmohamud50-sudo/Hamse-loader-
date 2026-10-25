@@ -314,7 +314,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Select Game Version -->
+            <!-- Select Game Version with Clickable Layout IDs -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -340,6 +340,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/txt_selected_badge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="GL"
@@ -360,20 +361,24 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <!-- GL -->
+                        <!-- GL Version -->
                         <LinearLayout
-                            android:layout_width="70dp"
-                            android:layout_height="75dp"
+                            android:id="@+id/layout_game_gl"
+                            android:layout_width="75dp"
+                            android:layout_height="80dp"
                             android:orientation="vertical"
                             android:gravity="center"
                             android:background="#1A3A4A"
-                            android:layout_marginEnd="8dp">
+                            android:layout_marginEnd="8dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:padding="4dp">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="PUBG"
                                 android:textColor="#00DDF8"
-                                android:textSize="10sp" />
+                                android:textSize="9sp" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -384,94 +389,114 @@
                                 android:layout_marginTop="2dp" />
                         </LinearLayout>
 
-                        <!-- KR -->
+                        <!-- KR Version -->
                         <LinearLayout
-                            android:layout_width="70dp"
-                            android:layout_height="75dp"
+                            android:id="@+id/layout_game_kr"
+                            android:layout_width="75dp"
+                            android:layout_height="80dp"
                             android:orientation="vertical"
                             android:gravity="center"
                             android:background="#1C1C28"
-                            android:layout_marginEnd="8dp">
+                            android:layout_marginEnd="8dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:padding="4dp">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="PUBG"
                                 android:textColor="#8A92A6"
-                                android:textSize="10sp" />
+                                android:textSize="9sp" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="KR"
                                 android:textColor="#FFFFFF"
                                 android:textSize="12sp"
+                                android:textStyle="bold"
                                 android:layout_marginTop="2dp" />
                         </LinearLayout>
 
-                        <!-- TW -->
+                        <!-- TW Version -->
                         <LinearLayout
-                            android:layout_width="70dp"
-                            android:layout_height="75dp"
+                            android:id="@+id/layout_game_tw"
+                            android:layout_width="75dp"
+                            android:layout_height="80dp"
                             android:orientation="vertical"
                             android:gravity="center"
                             android:background="#1C1C28"
-                            android:layout_marginEnd="8dp">
+                            android:layout_marginEnd="8dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:padding="4dp">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="PUBG"
                                 android:textColor="#8A92A6"
-                                android:textSize="10sp" />
+                                android:textSize="9sp" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="TW"
                                 android:textColor="#FFFFFF"
                                 android:textSize="12sp"
+                                android:textStyle="bold"
                                 android:layout_marginTop="2dp" />
                         </LinearLayout>
 
-                        <!-- VN -->
+                        <!-- VN Version -->
                         <LinearLayout
-                            android:layout_width="70dp"
-                            android:layout_height="75dp"
+                            android:id="@+id/layout_game_vn"
+                            android:layout_width="75dp"
+                            android:layout_height="80dp"
                             android:orientation="vertical"
                             android:gravity="center"
                             android:background="#1C1C28"
-                            android:layout_marginEnd="8dp">
+                            android:layout_marginEnd="8dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:padding="4dp">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="PUBG"
                                 android:textColor="#8A92A6"
-                                android:textSize="10sp" />
+                                android:textSize="9sp" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="VN"
                                 android:textColor="#FFFFFF"
                                 android:textSize="12sp"
+                                android:textStyle="bold"
                                 android:layout_marginTop="2dp" />
                         </LinearLayout>
 
-                        <!-- BGMI -->
+                        <!-- BGMI Version -->
                         <LinearLayout
-                            android:layout_width="70dp"
-                            android:layout_height="75dp"
+                            android:id="@+id/layout_game_bgmi"
+                            android:layout_width="75dp"
+                            android:layout_height="80dp"
                             android:orientation="vertical"
                             android:gravity="center"
-                            android:background="#1C1C28">
+                            android:background="#1C1C28"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:padding="4dp">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="PUBG"
+                                android:text="BATTLE"
                                 android:textColor="#8A92A6"
-                                android:textSize="10sp" />
+                                android:textSize="9sp" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="BGMI"
                                 android:textColor="#FFFFFF"
                                 android:textSize="12sp"
+                                android:textStyle="bold"
                                 android:layout_marginTop="2dp" />
                         </LinearLayout>
                     </LinearLayout>
